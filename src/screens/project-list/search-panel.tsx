@@ -1,10 +1,18 @@
-interface Sprops {
-  param: { name: string; personId: string };
-  setParam: (arg: any) => void;
-  users: { name: string; id: string }[];
+export interface User {
+  id: string;
+  name: string;
+  email: string;
+  title: string;
+  organization: string;
 }
 
-export const SearchPanel = ({ param, setParam, users }: Sprops) => {
+interface SearchPanelprops {
+  param: { name: string; personId: string };
+  setParam: (arg: SearchPanelprops["param"]) => void;
+  users: User[];
+}
+
+export const SearchPanel = ({ param, setParam, users }: SearchPanelprops) => {
   return (
     <form>
       <input

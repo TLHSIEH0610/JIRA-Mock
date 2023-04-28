@@ -1,9 +1,19 @@
-interface Lprops {
-  list: { name: string; id: string; personId: string }[];
-  users: { name: string; id: string }[];
+import { User } from "screens/project-list/search-panel";
+
+interface Project {
+  id: string;
+  name: string;
+  personId: string;
+  pin: boolean;
+  organization: string;
 }
 
-export const List = ({ list, users }: Lprops) => {
+interface ListProps {
+  list: Project[];
+  users: User[];
+}
+
+export const List = ({ list, users }: ListProps) => {
   return (
     <table>
       <thead>
