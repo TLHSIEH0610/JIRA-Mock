@@ -10,5 +10,14 @@ module.exports = (req, res, next) => {
       return res.status(400).json({ message: "Username or Password error" });
     }
   }
+  if (req.method === "POST" && req.path === "/register") {
+    if (req.body.username === "arnie" && req.body.password === "123") {
+      return res.status(200).json({
+        user: {
+          token: "123",
+        },
+      });
+    }
+  }
   next();
 };
