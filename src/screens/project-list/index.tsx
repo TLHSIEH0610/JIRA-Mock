@@ -2,10 +2,7 @@ import { useState, useEffect } from "react";
 import { List } from "screens/project-list/list";
 import { SearchPanel } from "screens/project-list/search-panel";
 import { cleanObject, useMount, useDebounce } from "utils";
-import { stringify } from "qs";
 import { useHttp } from "utils/http";
-
-const apiUrl = process.env.REACT_APP_API_URL;
 
 export const ProjectListScreen = () => {
   const [param, setParam] = useState({ name: "", personId: "" });
