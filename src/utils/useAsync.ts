@@ -12,7 +12,13 @@ const defaultInitialState: State<null> = {
   error: null,
 };
 
-export const useAsync = <D>(initialState?: State<D>) => {
+const defaultConfig = { throwOnError: false };
+
+export const useAsync = <D>(
+  initialState?: State<D>,
+  initialConfig?: typeof defaultConfig
+) => {
+  const config = { ...defaultConfig, ...initialConfig };
   const [state, setState] = useState({
     ...defaultInitialState,
     ...initialState,
@@ -38,7 +44,10 @@ export const useAsync = <D>(initialState?: State<D>) => {
     }
     setState({ ...state, stat: "loading" });
 
-    return promise.then(setData).catch(setError);
+    return promise.then(setData).catch((error) => {
+      setError(error);
+      if (config.throwOnError) return Promise.reject(error);
+    });
   };
 
   return {

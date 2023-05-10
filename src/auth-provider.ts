@@ -18,7 +18,7 @@ export const login = (data: { username: string; password: string }) =>
     body: JSON.stringify(data),
   }).then(async (response) => {
     if (response.ok) return handleUserResponse(await response.json());
-    else return Promise.reject(data);
+    else return Promise.reject(await response.json());
   });
 
 export const register = (data: { username: string; password: string }) =>
@@ -28,7 +28,7 @@ export const register = (data: { username: string; password: string }) =>
     body: JSON.stringify(data),
   }).then(async (response) => {
     if (response.ok) return handleUserResponse(await response.json());
-    else return Promise.reject(data);
+    else return Promise.reject(await response.json());
   });
 
 export const logout = async () => {
