@@ -21,3 +21,18 @@ export const useDebounce = <V>(value: V, delay?: number) => {
 
   return debouncedValue;
 };
+
+export const useDocumentTitle = (title: string, useDocumentTitle = true) => {
+  const prevTitle = document.title;
+
+  useEffect(() => {
+    document.title = title;
+  }, [title]);
+
+  useEffect(
+    () => () => {
+      if (!useDocumentTitle) document.title = prevTitle;
+    },
+    []
+  );
+};
