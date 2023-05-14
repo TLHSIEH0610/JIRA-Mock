@@ -2,11 +2,23 @@ import { ProjectListScreen } from "screens/project-list";
 import { useAuth } from "context/auth-context";
 import styled from "@emotion/styled";
 import { Row } from "components/lib";
+import type { MenuProps } from "antd";
 import { Dropdown, Menu, Button } from "antd";
 import { ReactComponent as SoftwareLogo } from "assets/software-logo.svg";
 
 export const AuthenticatedApp = () => {
   const { logout, user } = useAuth();
+
+  const items: MenuProps["items"] = [
+    {
+      key: "logout",
+      label: (
+        <Button type="link" onClick={logout}>
+          Logout
+        </Button>
+      ),
+    },
+  ];
   return (
     <Container>
       <Header between={true}>
@@ -16,17 +28,7 @@ export const AuthenticatedApp = () => {
           <h2>Users</h2>
         </HeaderLeft>
         <HeaderRight>
-          <Dropdown
-            overlay={
-              <Menu>
-                <Menu.Item key={"logout"}>
-                  <Button type="link" onClick={logout}>
-                    Logout
-                  </Button>
-                </Menu.Item>
-              </Menu>
-            }
-          >
+          <Dropdown menu={{ items }}>
             <Button type="link" onClick={(e) => e.preventDefault()}>
               Hi, {user?.name}
             </Button>
@@ -43,14 +45,8 @@ export const AuthenticatedApp = () => {
 
 const Container = styled.div`
   display: grid;
-  grid-template-rows: 6rem 1fr 6rem;
-  grid-template-columns: 20rem 1fr 20rem;
-  grid-template-areas:
-    "header header header"
-    "nav main aside"
-    "footer footer footer";
+  grid-template-rows: 6rem 1fr;
   height: 100vh;
-  grid-gap: 10rem;
 `;
 
 const Header = styled(Row)`
