@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 
 export const cleanObject = (object: object) =>
   Object.fromEntries(Object.entries(object).filter(([key, value]) => value));
@@ -22,8 +22,8 @@ export const useDebounce = <V>(value: V, delay?: number) => {
   return debouncedValue;
 };
 
-export const useDocumentTitle = (title: string, useDocumentTitle = true) => {
-  const prevTitle = document.title;
+export const useDocumentTitle = (title: string, keepOnUnmount = true) => {
+  const prevTitle = useRef(document.title).current;
 
   useEffect(() => {
     document.title = title;
@@ -31,8 +31,8 @@ export const useDocumentTitle = (title: string, useDocumentTitle = true) => {
 
   useEffect(
     () => () => {
-      if (!useDocumentTitle) document.title = prevTitle;
+      if (!keepOnUnmount) document.title = prevTitle;
     },
-    []
+    [keepOnUnmount, prevTitle]
   );
 };
