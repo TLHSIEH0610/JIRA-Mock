@@ -38,3 +38,10 @@ export const useDocumentTitle = (title: string, keepOnUnmount = true) => {
 };
 
 export const resetRoute = () => (window.location.href = window.location.origin);
+
+export const subset = (obj: object, keys: string[]) => {
+  const filterEntries = Object.entries(obj).filter(([key]) =>
+    keys.includes(key)
+  );
+  return Object.fromEntries(filterEntries);
+};
