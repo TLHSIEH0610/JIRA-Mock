@@ -11,7 +11,7 @@ import { Typography } from "antd";
 export const ProjectListScreen = () => {
   const [param, setParam] = useUrlQueryParam(["name", "personId"]);
   const debouncedParam = useDebounce(param, 2000);
-  const { isLoading, error, data: list } = useProjects(debouncedParam);
+  const { isLoading, error, data: list, retry } = useProjects(debouncedParam);
   const { data: users } = useUsers(debouncedParam);
   useDocumentTitle("Project List", false);
 
@@ -22,7 +22,12 @@ export const ProjectListScreen = () => {
       {error ? (
         <Typography.Text type={"danger"}>{error.message}</Typography.Text>
       ) : null}
-      <List dataSource={list || []} users={users || []} loading={isLoading} />
+      <List
+        dataSource={list || []}
+        users={users || []}
+        loading={isLoading}
+        refresh={retry}
+      />
     </Container>
   );
 };

@@ -24,7 +24,7 @@
       "personId": 1,
       "organization": "Map",
       "created": 1604989757139,
-      "pin": true
+      "pin": false
     },
     {
       "id": 2,
@@ -32,7 +32,7 @@
       "personId": 2,
       "organization": "Shopee",
       "created": 1604989757139,
-      "pin": true
+      "pin": false
     },
     {
       "id": 3,
@@ -46,7 +46,8 @@
       "name": "SE",
       "personId": 3,
       "organization": "SettleEasy",
-      "created": 1604980000011
+      "created": 1604980000011,
+      "pin": false
     },
     {
       "id": 5,

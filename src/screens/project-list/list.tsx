@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 import { Pin } from "components/pin";
 import { useEditProject } from "utils/project";
 export interface Project {
-  id: string;
+  id: number;
   name: string;
   personId: string;
   pin: boolean;
@@ -16,10 +16,13 @@ export interface Project {
 
 interface ListProps extends TableProps<Project> {
   users: User[];
+  refresh?: () => void;
 }
 
 export const List = ({ users, ...props }: ListProps) => {
   const { mutate } = useEditProject();
+  const pinProject = (id: number) => (pin: boolean) =>
+    mutate({ id, pin }).then(props.refresh);
 
   return (
     <Table
@@ -32,7 +35,7 @@ export const List = ({ users, ...props }: ListProps) => {
             return (
               <Pin
                 checked={project.pin}
-                onCheckedChange={(pin) => mutate({ id: project.id, pin })}
+                onCheckedChange={pinProject(project.id)}
               />
             );
           },

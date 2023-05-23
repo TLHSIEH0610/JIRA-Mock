@@ -24,6 +24,8 @@ export const useAsync = <D>(
     ...initialState,
   });
 
+  const [retry, setRetry] = useState(() => () => {});
+
   const setData = (data: D) =>
     setState({
       stat: "success",
@@ -38,12 +40,19 @@ export const useAsync = <D>(
       error,
     });
 
-  const run = (promise: Promise<D>) => {
+  const run = (
+    promise: Promise<D>,
+    runConfig?: { retry: () => Promise<D> }
+  ) => {
     if (!promise || !promise.then) {
       throw new Error("Argument must be a promise");
     }
     setState({ ...state, stat: "loading" });
-
+    setRetry(() => () => {
+      if (runConfig?.retry) {
+        run(runConfig?.retry(), runConfig);
+      }
+    });
     return promise.then(setData).catch((error) => {
       setError(error);
       if (config.throwOnError) return Promise.reject(error);
@@ -58,6 +67,7 @@ export const useAsync = <D>(
     run,
     setData,
     setError,
+    retry,
     ...state,
   };
 };
